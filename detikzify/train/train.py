@@ -113,7 +113,7 @@ def train(
     model,
     tokenizer,
     dataset,
-    overwrite=False,
+    overwrite=True,
     deepspeed=None,
     # training hyperparams
     batch_size: int = 128,
@@ -170,7 +170,6 @@ def train(
                 f"Checkpoint detected, resuming training at {last_checkpoint}. To avoid this behavior, change "
                 "the `output_dir` or add `overwrite` to train from scratch."
             )
-
     trainer = Trainer(
         model=model,
         train_dataset=prepare_dataset(dataset),
@@ -182,7 +181,7 @@ def train(
             weight_decay=0,
             num_train_epochs=num_epochs,
             learning_rate=learning_rate,
-            bf16=True,
+            fp16=True,
             logging_steps=10,
             lr_scheduler_type="cosine",
             optim="adamw_torch" if deepspeed else "adamw_torch_fused",
@@ -200,7 +199,7 @@ def train(
             pad_to_multiple_of=8
         )
     )
-
+    # import pdb; pdb.set_trace()
     model.config.use_cache = False
     trainer.add_callback(trainer.train_dataset)
     trainer.train(resume_from_checkpoint=last_checkpoint)

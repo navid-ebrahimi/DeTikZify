@@ -11,6 +11,8 @@ from detikzify.dataset import load_dataset
 from detikzify.model import load
 from detikzify.train import train
 
+import torch
+
 def parse_args():
     argument_parser = ArgumentParser(
         description="Fine-tune DeTikZify on DaTikZ."
@@ -24,7 +26,7 @@ def parse_args():
         help="url or path to a pretrained projector for clip soft prompts for multimodal models"
     )
     argument_parser.add_argument("--datikz",
-        required=True,
+        # required=True,
         help="path to the DaTikZ dataset (in parquet format)",
     )
     argument_parser.add_argument("--output",
@@ -48,9 +50,11 @@ if __name__ == "__main__":
     set_seed(0)
 
     args = parse_args()
-    model, tokenizer = load(args.base_model, pretrain_mm_mlp_adapter=args.projector)
+    model, tokenizer = load(args.base_model, torch_dtype=torch.float16, pretrain_mm_mlp_adapter=args.projector)
 
-    datikz: Dataset = load_dataset("parquet", data_files=args.datikz, split="train") # type: ignore
+    datikz: Dataset = load_dataset("nllg/datikz-v2", split="train") # type: ignore
+    datikz = datikz.select(range(10))
+    print(datikz)
     datikz = datikz.select_columns(["image", "code"]).rename_column("code", "text")
 
     train(

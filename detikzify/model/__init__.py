@@ -35,11 +35,23 @@ def load(base_model, vision_tower="vit_so400m_patch14_siglip_384.webli", pretrai
         padding_side="right", # Note: only for training, need to change to "left" for batched inference
         legacy=False
     )
+
+    # if 'torch_dtype' not in kwargs:
+    #     kwargs['torch_dtype'] = torch.float16
+
     model = DetikzifyForCausalLM.from_pretrained(
         pretrained_model_name_or_path=base_model,
         use_cache=True,
         **kwargs
     )
+
+    # Ensure consistent dtype for the model
+    # model = model.to(kwargs['torch_dtype'])
+    
+    # Convert lm_head bias if it exists
+    # if hasattr(model.lm_head, 'bias') and model.lm_head.bias is not None:
+    #     model.lm_head.bias = model.lm_head.bias.to(kwargs['torch_dtype'])
+
     model.config.model_type = DetikzifyConfig.model_type # type: ignore
     model.generation_config.pad_token_id = tokenizer.pad_token_id # type: ignore
 
@@ -55,5 +67,8 @@ def load(base_model, vision_tower="vit_so400m_patch14_siglip_384.webli", pretrai
         feature_layer=getattr(model.config, "feature_layer", -1), # type: ignore
         concat_patches=getattr(model.config, "concat_patches", 2) # type: ignore
     )
+
+    # if hasattr(model.model, 'mm_projector'):
+    #     model.model.mm_projector = model.model.mm_projector.to(kwargs['torch_dtype'])
 
     return model, DetikzifyTokenizer(text=tokenizer, image=processor)
