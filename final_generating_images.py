@@ -979,12 +979,12 @@ def process_chunk(start_idx, chunk_data, output_dir):
                         "generated_samples": tikz_samples,
                         "sample_images": sample_images
                     })
-                if global_idx % 1000 == 0:
+                if global_idx % 10 == 0:
                     print(f"{global_idx} is successful")
 
                 # Periodically flush buffer to disk
                 if len(io_buffer._buffer) >= 56:
-                    print(f"Flushing {len(io_buffer._buffer)} images")
+                    # print(f"Flushing {len(io_buffer._buffer)} images")
                     io_buffer.flush_to_disk(output_dir)
 
             except Exception as e:
@@ -1062,10 +1062,10 @@ def main_parallel(max_samples=400):
     print(f"Using {num_processes} processes for computation")
 
     dataset = load_dataset("Navidium/datikz-v2", data_files={"train": "train/*.arrow"})
-    # dataset = DatasetDict({
-    # "train": dataset["data"].select([i for i in range(dataset["data"].num_rows) if i != 408])
-    # })
-    dataset_train = dataset['train']['code'][:50]
+    dataset = DatasetDict({
+    "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
+    })
+    dataset_train = dataset['train']['code'][:20000]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
