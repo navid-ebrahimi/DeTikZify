@@ -12,7 +12,7 @@ Original file is located at
 from datasets import load_dataset
 
 from huggingface_hub import login
-login(token="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")
+login(token="##")
 
 """# **Section 2**"""
 
