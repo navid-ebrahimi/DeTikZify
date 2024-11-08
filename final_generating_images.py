@@ -1062,9 +1062,9 @@ def main_parallel(max_samples=400):
     print(f"Using {num_processes} processes for computation")
 
     dataset = load_dataset("Navidium/datikz-v2", data_files={"train": "train/*.arrow"})
-    dataset = DatasetDict({
-    "train": dataset["data"].select([i for i in range(dataset["data"].num_rows) if i != 408])
-    })
+    # dataset = DatasetDict({
+    # "train": dataset["data"].select([i for i in range(dataset["data"].num_rows) if i != 408])
+    # })
     dataset_train = dataset['train']['code'][:50]
 
     output_dir = "./tikz_samples"
