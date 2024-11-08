@@ -50,8 +50,8 @@ from nltk.corpus import wordnet
 import re
 import random
 
-nltk.download('averaged_perceptron_tagger')
-nltk.download('wordnet')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('wordnet')
 
 predefined_colors = ['red', 'blue', 'green', 'echodrk', 'yellow', 'purple', 'mymauve', 'orange', 'cyan', 'magenta', 'brown', 'black', 'camdrk', 'olivegreen', 'darkgray', 'lightgray', 'camdrk', 'violet', 'teal']
 defined_colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange', 'cyan', 'brown', 'black']
