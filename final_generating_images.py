@@ -842,6 +842,7 @@ def tikz2png_buffered(tikz_code, output_figure_name, process_id, io_buffer, time
             print(f"LaTeX compilation for {output_figure_name} timed out.")
             return None
         if process.returncode != 0:
+            print("navid")
             raise subprocess.CalledProcessError(process.returncode, process.args)
 
         # Use PyMuPDF's memory-based operations
