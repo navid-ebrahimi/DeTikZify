@@ -1062,7 +1062,7 @@ def save_metadata_to_parquet_limited(metadata, output_dir, base_filename="tikz_s
             else:
                 current_file_size = file_size
         except:
-                pass
+            pass
 
     # Write any remaining data in the last file
     if current_data:
@@ -1071,7 +1071,8 @@ def save_metadata_to_parquet_limited(metadata, output_dir, base_filename="tikz_s
             pq.write_table(pa.Table.from_pandas(pd.DataFrame(current_data)), final_file_path)
             os.remove(temp_file_path)
             print(f"Saved {final_file_path} with approx size {os.path.getsize(final_file_path) / (1024 * 1024):.2f} MB")
-        pass
+        except:
+            pass
 
 def main_parallel(max_samples=400):
     total_start_time = datetime.now()
