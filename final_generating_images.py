@@ -1086,7 +1086,7 @@ def main_parallel(max_samples=400):
     dataset = DatasetDict({
         "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
         })
-    dataset_train = dataset['train']['code'][:10000]
+    dataset_train = dataset['train']['code'][2000:3000]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
@@ -1167,7 +1167,7 @@ def main_parallel(max_samples=400):
                 })
 
         except Exception as e:
-            print(f"Error processing item {item}: {e}")
+            print(f"pass")
 
     # Save to Parquet with file size limit
     save_metadata_to_parquet_limited(data_for_parquet, output_dir="parquet_output", max_file_size=500 * 1024 * 1024)
