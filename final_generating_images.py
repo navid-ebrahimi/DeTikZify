@@ -1062,8 +1062,9 @@ def save_metadata_to_parquet_limited(metadata, output_dir, base_filename="tikz_s
             else:
                 current_file_size = file_size
         except:
+            import pdb ; pdb.set_trace()
             pass
-
+    import pdb ; pdb.set_trace()
     # Write any remaining data in the last file
     if current_data:
         try:
