@@ -1086,7 +1086,7 @@ def main_parallel(max_samples=400):
     dataset = DatasetDict({
         "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
         })
-    dataset_train = dataset['train']['code'][:100]
+    dataset_train = dataset['train']['code'][:10000]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
