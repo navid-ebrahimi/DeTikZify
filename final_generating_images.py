@@ -1122,7 +1122,7 @@ def main_parallel(max_samples=400):
 
     # Structure data for Parquet saving with binary images
     data_for_parquet = []
-
+    import pdb ; pdb.set_trace()
     for item in combined_metadata:
         try:
             # Ensure the main tikz_code and original image are not empty
@@ -1170,16 +1170,11 @@ def main_parallel(max_samples=400):
             print(f"pass")
 
     # Save to Parquet with file size limit
+    import pdb ; pdb.set_trace()
     save_metadata_to_parquet_limited(data_for_parquet, output_dir="parquet_output", max_file_size=500 * 1024 * 1024)
 
     print("\nData successfully saved with a 500 MB limit on each Parquet file")
-
-    # Optionally log errors
-    if all_errors:
-        with open("error_log.txt", "w") as f:
-            for error in all_errors:
-                f.write(f"Error: {error['error']}\nTikZ Code: {error['tikz_code']}\n\n")
-
+    import pdb ; pdb.set_trace()
     total_end_time = datetime.now()
     print("\nProcessing Summary:")
     print(f"Start time: {total_start_time.strftime('%Y-%m-%d %H:%M:%S')}")
