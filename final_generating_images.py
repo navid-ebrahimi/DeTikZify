@@ -1031,6 +1031,10 @@ def save_metadata_to_parquet_limited(metadata, output_dir, base_filename="tikz_s
 
     for entry in metadata:
         try:
+            # Skip if the entry is empty
+            if not entry:
+                continue
+    
             # Add entry to the current data batch
             current_data.append(entry)
     
@@ -1062,8 +1066,9 @@ def save_metadata_to_parquet_limited(metadata, output_dir, base_filename="tikz_s
             else:
                 current_file_size = file_size
         except:
-            import pdb ; pdb.set_trace()
+            import pdb; pdb.set_trace()
             pass
+
     import pdb ; pdb.set_trace()
     # Write any remaining data in the last file
     if current_data:
@@ -1093,7 +1098,7 @@ def main_parallel(max_samples=400):
     dataset = DatasetDict({
         "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
         })
-    dataset_train = dataset['train']['code'][2000:3000]
+    dataset_train = dataset['train']['code'][2000:2100]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
