@@ -1030,43 +1030,48 @@ def save_metadata_to_parquet_limited(metadata, output_dir, base_filename="tikz_s
     current_file_size = 0
 
     for entry in metadata:
-        # Add entry to the current data batch
-        current_data.append(entry)
-
-        # Estimate the file size after writing to Parquet format
-        df = pd.DataFrame(current_data)
-        table = pa.Table.from_pandas(df)
-
-        # Temporarily save to check file size
-        temp_file_path = os.path.join(output_dir, f"{base_filename}_temp.parquet")
-        pq.write_table(table, temp_file_path)
-        file_size = os.path.getsize(temp_file_path)
-
-        if file_size >= max_file_size:
-            # If size exceeds limit, write previous data batch to Parquet and reset
-            if len(current_data) > 1:
-                # Remove the last entry to stay within limit and save
-                current_data.pop()
-                df = pd.DataFrame(current_data)
-                table = pa.Table.from_pandas(df)
-
-            file_path = os.path.join(output_dir, f"{base_filename}_{file_index}.parquet")
-            pq.write_table(table, file_path)
-#             print(f"Saved {file_path} with approx size {file_size / (1024 * 1024):.2f} MB")
-
-            # Increment file index, reset current data and size tracker
-            file_index += 1
-            current_data = [entry]  # Start new batch with the entry that exceeded
-            os.remove(temp_file_path)
-        else:
-            current_file_size = file_size
+        try:
+            # Add entry to the current data batch
+            current_data.append(entry)
+    
+            # Estimate the file size after writing to Parquet format
+            df = pd.DataFrame(current_data)
+            table = pa.Table.from_pandas(df)
+    
+            # Temporarily save to check file size
+            temp_file_path = os.path.join(output_dir, f"{base_filename}_temp.parquet")
+            pq.write_table(table, temp_file_path)
+            file_size = os.path.getsize(temp_file_path)
+    
+            if file_size >= max_file_size:
+                # If size exceeds limit, write previous data batch to Parquet and reset
+                if len(current_data) > 1:
+                    # Remove the last entry to stay within limit and save
+                    current_data.pop()
+                    df = pd.DataFrame(current_data)
+                    table = pa.Table.from_pandas(df)
+    
+                file_path = os.path.join(output_dir, f"{base_filename}_{file_index}.parquet")
+                pq.write_table(table, file_path)
+    #             print(f"Saved {file_path} with approx size {file_size / (1024 * 1024):.2f} MB")
+    
+                # Increment file index, reset current data and size tracker
+                file_index += 1
+                current_data = [entry]  # Start new batch with the entry that exceeded
+                os.remove(temp_file_path)
+            else:
+                current_file_size = file_size
+        except:
+                pass
 
     # Write any remaining data in the last file
     if current_data:
-        final_file_path = os.path.join(output_dir, f"{base_filename}_{file_index}.parquet")
-        pq.write_table(pa.Table.from_pandas(pd.DataFrame(current_data)), final_file_path)
-        os.remove(temp_file_path)
-        print(f"Saved {final_file_path} with approx size {os.path.getsize(final_file_path) / (1024 * 1024):.2f} MB")
+        try:
+            final_file_path = os.path.join(output_dir, f"{base_filename}_{file_index}.parquet")
+            pq.write_table(pa.Table.from_pandas(pd.DataFrame(current_data)), final_file_path)
+            os.remove(temp_file_path)
+            print(f"Saved {final_file_path} with approx size {os.path.getsize(final_file_path) / (1024 * 1024):.2f} MB")
+        pass
 
 def main_parallel(max_samples=400):
     total_start_time = datetime.now()
