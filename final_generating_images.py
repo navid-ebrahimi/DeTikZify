@@ -868,8 +868,7 @@ def tikz2png_buffered(tikz_code, output_figure_name, process_id, io_buffer, time
         if os.path.exists(temp_dir):
             shutil.rmtree(temp_dir)
 
-
-def process_chunk(start_idx, chunk_data, output_dir):
+def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
     """Process a chunk with optimized I/O operations"""
     process_start_time = datetime.now()
     process_id = mp.current_process().pid
@@ -1095,7 +1094,7 @@ def main_parallel(max_samples=400):
     dataset = DatasetDict({
         "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
         })
-    dataset_train = dataset['train']['code'][:80000]
+    dataset_train = dataset['train']['code'][:1000]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
@@ -1207,10 +1206,10 @@ from huggingface_hub import HfApi, HfFolder, Repository
 import os
 
 # Set up API and login (ensure you’re logged in with `huggingface-cli login`)
-api = HfApi()
-repo_name = "Navidium/tikz-v2"
-image_folder = "./train"
-api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
+# api = HfApi()
+# repo_name = "Navidium/tikz-v2"
+# image_folder = "./train"
+# api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
 # api.upload_file(
 #     path_or_fileobj="./metadata.json",
 #     path_in_repo="metadata.json",
@@ -1218,9 +1217,9 @@ api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
 #     repo_type="dataset",
 # )
 
-api.upload_folder(
-    folder_path=image_folder,
-    path_in_repo=image_folder,
-    repo_id=repo_name,
-    repo_type="dataset",
-)
+# api.upload_folder(
+#     folder_path=image_folder,
+#     path_in_repo=image_folder,
+#     repo_id=repo_name,
+#     repo_type="dataset",
+# )
