@@ -916,14 +916,10 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                     try:
                         generated_code = main(tikz_code)
 
-                        if global_idx==0:
-                            print("x")
                         # Skip if generated code matches the original tikz_code
                         if generated_code == tikz_code:
                             continue
 
-                        if global_idx==0:
-                            print("navid")
                         sample_png_filename = f"sample_{global_idx}_{successful_samples}"
 
                         # Submit sample processing to thread pool
@@ -950,8 +946,6 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                     try:
                         generated_code = main(tikz_code, False)
 
-                        if global_idx==0:
-                            print("y")
                         # Skip if generated code matches the original tikz_code
                         if generated_code == tikz_code:
                             continue
@@ -980,8 +974,6 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                 num = 0
                 for future, filename, code in sample_futures:
                     try:
-                        if global_idx==0:
-                            print("hamid")
 #                         if future.result(timeout=60):
                         tikz_samples.append(code)
                         sample_images.append(filename)
