@@ -883,6 +883,7 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
         for local_idx, tikz_code in enumerate(chunk_data):
             global_idx = start_idx + local_idx + initial_offset
             try:
+                import pdb; pdb.set_trace()
                 original_png_filename = f"original_{global_idx}"
                 tikz_code = add_documentclass_if_missing(tikz_code)
 
