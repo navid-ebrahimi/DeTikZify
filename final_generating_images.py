@@ -1031,7 +1031,7 @@ def save_metadata_to_parquet_fixed_size(metadata, output_dir, base_filename="tik
     os.makedirs(output_dir, exist_ok=True)
 
     max_size_bytes = max_size_mb * 1024 * 1024  # Convert MB to bytes
-    file_index = 2
+    file_index = 0
     current_data = []
 
     def get_estimated_size(df):
@@ -1095,7 +1095,7 @@ def main_parallel(max_samples=400):
     dataset = DatasetDict({
         "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
         })
-    dataset_train = dataset['train']['code'][10000:50000]
+    dataset_train = dataset['train']['code'][:80000]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
@@ -1210,7 +1210,7 @@ import os
 api = HfApi()
 repo_name = "Navidium/tikz-v2"
 image_folder = "./train"
-# api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
+api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
 # api.upload_file(
 #     path_or_fileobj="./metadata.json",
 #     path_in_repo="metadata.json",
