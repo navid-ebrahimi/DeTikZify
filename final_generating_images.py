@@ -883,7 +883,6 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
         for local_idx, tikz_code in enumerate(chunk_data):
             global_idx = start_idx + local_idx + initial_offset
             try:
-                import pdb; pdb.set_trace()
                 original_png_filename = f"original_{global_idx}"
                 tikz_code = add_documentclass_if_missing(tikz_code)
 
@@ -923,6 +922,8 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                         if generated_code == tikz_code:
                             continue
 
+                        if global_idx==0:
+                            print("navid")
                         sample_png_filename = f"sample_{global_idx}_{successful_samples}"
 
                         # Submit sample processing to thread pool
@@ -977,6 +978,8 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                 num = 0
                 for future, filename, code in sample_futures:
                     try:
+                        if global_idx==0:
+                            print("hamid")
 #                         if future.result(timeout=60):
                         tikz_samples.append(code)
                         sample_images.append(filename)
