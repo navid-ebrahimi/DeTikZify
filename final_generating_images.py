@@ -887,7 +887,7 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                 original_png_filename = f"original_{global_idx}"
                 tikz_code = add_documentclass_if_missing(tikz_code)
 
-                # Process original image
+                Process original image
                 future = io_executor.submit(
                     tikz2png_buffered,
                     tikz_code,
@@ -1149,12 +1149,12 @@ def main_parallel(max_samples=400):
                 continue
 
             # Store the original image in its own row
-            data_for_parquet.append({
-                "original_id": original_id,
-                "tikz_code": item["tikz_code"],
-                "image": original_image_binary,
-                "image_type": "original"
-            })
+            # data_for_parquet.append({
+            #     "original_id": original_id,
+            #     "tikz_code": item["tikz_code"],
+            #     "image": original_image_binary,
+            #     "image_type": "original"
+            # })
 
             # Add each sample image and link it to the original image using original_id
             for i, (sample_img, tikz_code) in enumerate(zip(item['sample_images'], item['generated_samples']), start=1):
