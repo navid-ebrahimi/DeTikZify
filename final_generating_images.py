@@ -907,8 +907,6 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                 successful_samples = 0
                 tries = 0
 
-                if global_idx==0:
-                    import pdb; pdb.set_trace()
 
                 # Process samples
                 start_time = time.time()
@@ -918,6 +916,8 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                     try:
                         generated_code = main(tikz_code)
 
+                        if global_idx==0:
+                            print("x")
                         # Skip if generated code matches the original tikz_code
                         if generated_code == tikz_code:
                             continue
@@ -950,6 +950,8 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                     try:
                         generated_code = main(tikz_code, False)
 
+                        if global_idx==0:
+                            print("y")
                         # Skip if generated code matches the original tikz_code
                         if generated_code == tikz_code:
                             continue
