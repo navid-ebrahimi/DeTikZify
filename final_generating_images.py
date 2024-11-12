@@ -1206,20 +1206,20 @@ from huggingface_hub import HfApi, HfFolder, Repository
 import os
 
 # Set up API and login (ensure you’re logged in with `huggingface-cli login`)
-# api = HfApi()
-# repo_name = "Navidium/tikz-v2"
-# image_folder = "./train"
-# api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
-# api.upload_file(
-#     path_or_fileobj="./metadata.json",
-#     path_in_repo="metadata.json",
-#     repo_id=repo_name,
-#     repo_type="dataset",
-# )
+api = HfApi()
+repo_name = "Navidium/tikz-v2x"
+image_folder = "./train"
+api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
+api.upload_file(
+    path_or_fileobj="./metadata.json",
+    path_in_repo="metadata.json",
+    repo_id=repo_name,
+    repo_type="dataset",
+)
 
-# api.upload_folder(
-#     folder_path=image_folder,
-#     path_in_repo=image_folder,
-#     repo_id=repo_name,
-#     repo_type="dataset",
-# )
+api.upload_folder(
+    folder_path=image_folder,
+    path_in_repo=image_folder,
+    repo_id=repo_name,
+    repo_type="dataset",
+)
