@@ -1210,7 +1210,7 @@ import os
 api = HfApi()
 repo_name = "Navidium/tikz-v2"
 image_folder = "./train"
-api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
+# api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
 # api.upload_file(
 #     path_or_fileobj="./metadata.json",
 #     path_in_repo="metadata.json",
