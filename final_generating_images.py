@@ -994,7 +994,7 @@ def process_chunk(start_idx, chunk_data, output_dir):
                         "generated_samples": tikz_samples,
                         "sample_images": sample_images
                     })
-                if global_idx % 10 == 0:
+                if global_idx % 100 == 0:
                     print(f"{global_idx} is successful")
 
                 # Periodically flush buffer to disk
