@@ -1004,7 +1004,7 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                     print(f"{global_idx} is successful")
 
                 # Periodically flush buffer to disk
-                if len(io_buffer._buffer) >= 56:
+                if len(io_buffer._buffer) >= 30:
 #                     print(f"Flushing {len(io_buffer._buffer)} images")
                     io_buffer.flush_to_disk(output_dir)
 
