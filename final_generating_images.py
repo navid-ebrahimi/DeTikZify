@@ -907,6 +907,9 @@ def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
                 successful_samples = 0
                 tries = 0
 
+                if global_idx==0:
+                    import pdb; pdb.set_trace()
+
                 # Process samples
                 start_time = time.time()
                 for i in range(4):
