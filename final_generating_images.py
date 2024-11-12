@@ -1209,7 +1209,7 @@ import os
 # Set up API and login (ensure you’re logged in with `huggingface-cli login`)
 api = HfApi()
 repo_name = "Navidium/tikz-v2"
-image_folder = "./parquet_output"
+image_folder = "./train"
 api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
 # api.upload_file(
 #     path_or_fileobj="./metadata.json",
