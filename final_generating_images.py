@@ -808,7 +808,7 @@ class IOBuffer:
                 data.save(filepath)
             self._buffer.clear()
 
-def tikz2png_buffered(tikz_code, output_figure_name, process_id, io_buffer, timeout_seconds=120):
+def tikz2png_buffered(tikz_code, output_figure_name, process_id, io_buffer, timeout_seconds=90):
     """Memory-optimized version of tikz2png that uses buffers instead of immediate disk writes"""
     temp_dir = f'/dev/shm/process_{process_id}_{output_figure_name}'  # Use RAM disk if available
 
@@ -1096,7 +1096,7 @@ def main_parallel(max_samples=400):
     dataset = DatasetDict({
         "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
         })
-    dataset_train = dataset['train']['code'][:50000]
+    dataset_train = dataset['train']['code'][:20000]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
