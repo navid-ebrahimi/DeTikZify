@@ -12,7 +12,7 @@
 from datasets import load_dataset
 
 from huggingface_hub import login
-login(token="##")
+login(token="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")
 
 """# **Section 2**"""
 
@@ -1210,7 +1210,7 @@ import os
 
 # Set up API and login (ensure you’re logged in with `huggingface-cli login`)
 api = HfApi()
-repo_name = "Navidium/tikz-v2x"
+repo_name = "Navidium/tikz-v2xx"
 image_folder = "./train"
 api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
 
