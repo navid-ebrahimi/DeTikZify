@@ -869,7 +869,7 @@ def tikz2png_buffered(tikz_code, output_figure_name, process_id, io_buffer, time
         if os.path.exists(temp_dir):
             shutil.rmtree(temp_dir)
 
-def process_chunk(start_idx, chunk_data, output_dir, initial_offset=100):
+def process_chunk(start_idx, chunk_data, output_dir, initial_offset=0):
     """Process a chunk with optimized I/O operations"""
     process_start_time = datetime.now()
     process_id = mp.current_process().pid
@@ -1032,7 +1032,7 @@ def save_metadata_to_parquet_fixed_size(metadata, output_dir, base_filename="tik
     os.makedirs(output_dir, exist_ok=True)
 
     max_size_bytes = max_size_mb * 1024 * 1024  # Convert MB to bytes
-    file_index = 1
+    file_index = 0
     current_data = []
 
     def get_estimated_size(df):
@@ -1096,7 +1096,7 @@ def main_parallel(max_samples=400):
     dataset = DatasetDict({
         "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
         })
-    dataset_train = dataset['train']['code'][100:200]
+    dataset_train = dataset['train']['code'][:50000]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
@@ -1210,9 +1210,9 @@ import os
 
 # Set up API and login (ensure you’re logged in with `huggingface-cli login`)
 api = HfApi()
-repo_name = "Navidium/tikz-v2xx"
+repo_name = "Navidium/tikz-v2"
 image_folder = "./train"
-# api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
+api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
 
 api.upload_folder(
     folder_path=image_folder,
