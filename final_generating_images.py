@@ -1032,7 +1032,7 @@ def save_metadata_to_parquet_fixed_size(metadata, output_dir, base_filename="tik
     os.makedirs(output_dir, exist_ok=True)
 
     max_size_bytes = max_size_mb * 1024 * 1024  # Convert MB to bytes
-    file_index = 10
+    file_index = 11
     current_data = []
 
     def get_estimated_size(df):
