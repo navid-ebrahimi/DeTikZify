@@ -1096,7 +1096,7 @@ def main_parallel(max_samples=400):
     dataset = DatasetDict({
         "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
         })
-    dataset_train = dataset['train']['code'][150000:150100]
+    dataset_train = dataset['train']['code'][150000:200000]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
@@ -1209,14 +1209,14 @@ from huggingface_hub import HfApi, HfFolder, Repository
 import os
 
 # Set up API and login (ensure you’re logged in with `huggingface-cli login`)
-# api = HfApi()
-# repo_name = "Navidium/tikz-v2"
-# image_folder = "./train"
-# # api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
+api = HfApi()
+repo_name = "Navidium/tikz-v2"
+image_folder = "./train"
+# api.create_repo(repo_name, exist_ok=True, repo_type="dataset",)
 
-# api.upload_folder(
-#     folder_path=image_folder,
-#     path_in_repo=image_folder,
-#     repo_id=repo_name,
-#     repo_type="dataset",
-# )
+api.upload_folder(
+    folder_path=image_folder,
+    path_in_repo=image_folder,
+    repo_id=repo_name,
+    repo_type="dataset",
+)
