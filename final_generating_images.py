@@ -869,7 +869,7 @@ def tikz2png_buffered(tikz_code, output_figure_name, process_id, io_buffer, time
         if os.path.exists(temp_dir):
             shutil.rmtree(temp_dir)
 
-def process_chunk(start_idx, chunk_data, output_dir, initial_offset=340000):
+def process_chunk(start_idx, chunk_data, output_dir, initial_offset=330000):
     """Process a chunk with optimized I/O operations"""
     process_start_time = datetime.now()
     process_id = mp.current_process().pid
@@ -1096,7 +1096,7 @@ def main_parallel(max_samples=400):
     dataset = DatasetDict({
         "train": dataset["train"].select([i for i in range(dataset["train"].num_rows) if i != 408])
         })
-    dataset_train = dataset['train']['code'][340000:345000]
+    dataset_train = dataset['train']['code'][330000:335000]
 
     output_dir = "./tikz_samples"
     os.makedirs(output_dir, exist_ok=True)
